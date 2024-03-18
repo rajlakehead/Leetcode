@@ -2,7 +2,7 @@ class Solution:
     def stoneGame(self, piles: List[int]) -> bool:
         alice = 0
         bob = 0
-        @cache
+        @lru_cache(None)
         def dp(i, j):
             if i > j:
                 return 0
