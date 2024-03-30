@@ -19,5 +19,6 @@ class Solution:
                 bob += 1
             if dan > bob:
                 res = min(res, i + 1)
+                
         return res if res != float('inf') else -1
             
