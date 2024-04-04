@@ -7,8 +7,7 @@ class Solution:
 
         for right in range(len(nums)):
             count[nums[right]] += 1
-            if count[nums[right]] > currmax:
-                currmax = count[nums[right]]
+            currmax = max(currmax, count[nums[right]])
 
             while (right - left + 1) - currmax > k:
                 count[nums[left]] -= 1
