@@ -15,8 +15,7 @@ class Solution:
                 if count[nums[left]] == 0:
                     del count[nums[left]]
             
-            res = max(res, currmax)
-        return res
+        return currmax
                 
 
 
