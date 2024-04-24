@@ -1,18 +1,21 @@
 class Solution:
     def tribonacci(self, n: int) -> int:
-        if n == 0:
-            return 0
-        n0 = 0
-        n1 = 1
-        n2 = 1
 
-        while n - 3 >= 0:
-            new = n0 + n1 + n2
-            n0 = n1
-            n1 = n2
-            n2 = new
-            n -= 1
+        memo = {}
+        def dp(n):
+            if n in memo:
+                return memo[n]
+            if n == 0:
+                return 0
+            if n == 1 or n == 2:
+                return 1
+            
+            memo[n] = dp(n - 1) + dp(n - 2) + dp(n - 3) 
+
+            return memo[n]
+        return dp(n)
+            
         
-        return n2
+        
 
         
