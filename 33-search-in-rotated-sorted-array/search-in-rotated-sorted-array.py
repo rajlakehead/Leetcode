@@ -28,20 +28,17 @@ class Solution:
             return left
         
         left = binarySearch(left, right, False)
-        print(left)
 
         if nums[0] < nums[left]:
             minIndex = 0
         else:
             minIndex = left
         
-        print(minIndex)
         if target >= nums[minIndex] and target <= nums[len(nums) - 1]:
             targetIndex = binarySearch(minIndex, len(nums) - 1, True)
         else:
             targetIndex = binarySearch(0, minIndex - 1, True)
         
-        print(targetIndex)
         if nums[targetIndex] == target:
             return targetIndex
         return -1
