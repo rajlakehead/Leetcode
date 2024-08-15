@@ -1,21 +1,10 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        memo = {}
-        def dp(index):
-            if index in memo:
-                return memo[index]
-            
-            if index == n - 1:
-                return 1
+        array = [0] * (n + 1)
+        array[n] = 1
+        array[n - 1] = 1
 
-            if index == n:
-                return 1
-            
-            one = dp(index + 1)
-            two = dp(index + 2)
-
-            memo[index] = one + two
-
-            return memo[index]
-
-        return dp(0)
+        for i in range(len(array) - 3, -1, -1):
+            array[i] = array[i + 1] + array[i + 2]
+        
+        return array[0]
