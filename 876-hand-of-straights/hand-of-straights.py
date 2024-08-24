@@ -19,7 +19,6 @@ class Solution:
             start = minheap[0]
 
             for i in range(start, start + groupSize):
-                print(i)
                 if i not in hashmap:
                     return False
                 hashmap[i] -= 1
@@ -29,7 +28,6 @@ class Solution:
                     heapq.heappop(minheap)
 
 
-            print("af")
         return True
             
 
