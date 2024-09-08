@@ -3,8 +3,9 @@ class Solution:
         hashmap = {}
 
         for i, n in enumerate(nums):
-            if (target - n) in hashmap:
-                return [i, hashmap[(target - n)]]
+            if target - n in hashmap:
+                return [i, hashmap[target - n]]
             else:
                 hashmap[n] = i
+
         
