@@ -4,7 +4,7 @@ class Solution:
         intervals.sort()
         left, right = intervals[0][0], intervals[0][1]
 
-        for i in range(len(intervals)):
+        for i in range(1, len(intervals)):
             if intervals[i][0] > right:
                 res.append([left, right])
                 left = intervals[i][0]
@@ -14,6 +14,7 @@ class Solution:
                 right = max(right, intervals[i][1])
         
         res.append([left, right])
+
         return res
 
 
