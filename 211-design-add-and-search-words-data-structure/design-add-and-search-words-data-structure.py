@@ -1,45 +1,49 @@
-class TrieNode:
+class TreeNode:
     def __init__(self):
-        # Dictionary to store child nodes mapped by characters
-        self.children = {}  
-        # Flag indicating whether the node represents the end of a word
-        self.isWord = False  
-
+        self.children = {}
+        self.endWord = False
 
 class WordDictionary:
+
     def __init__(self):
-        # Initialize the Trie with an empty root node
-        self.root = TrieNode()  
+        self.root = TreeNode()
+        
 
     def addWord(self, word: str) -> None:
         curr = self.root
-        for w in word:
-            # Create a new node if the child does not exist
-            if w not in curr.children:
-                curr.children[w] = TrieNode()  
-            curr = curr.children[w]
-        # Mark the last node as representing the end of the inserted word
-        curr.isWord = True  
 
+        for c in word:
+            if c not in curr.children:
+                curr.children[c] = TreeNode()
+            curr = curr.children[c]
+        curr.endWord = True
+            
     def search(self, word: str) -> bool:
-        def dfs(j, root):
-            curr = root
 
-            for i in range(j, len(word)):
-                w = word[i]
-                # Handle wildcard character "."
-                if w == ".":  
-                    # Recursively search all child nodes for wildcard query
-                    for child in curr.children.values():  
-                        if dfs(i + 1, child):  
+        def dfs(index, node):
+            curr = node
+
+            for i in range(index, len(word)):
+
+                if word[i] == ".":
+                    for child in curr.children.values():
+                        if dfs(i + 1, child):
                             return True
                     return False
                 else:
-                    if w not in curr.children:
+                    if word[i] not in curr.children:
                         return False
-                    curr = curr.children[w]
-            # Return True if the last node represents the end of a word
-            return curr.isWord  
+                    curr = curr.children[word[i]]
 
-        # Start DFS search from the root
-        return dfs(0, self.root)  
+            
+            return curr.endWord
+        return dfs(0, self.root)
+
+                
+
+        
+
+# Your WordDictionary object will be instantiated and called as such:
+# obj = WordDictionary()
+# obj.addWord(word)
+# param_2 = obj.search(word)
