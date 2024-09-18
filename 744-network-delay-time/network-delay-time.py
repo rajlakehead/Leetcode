@@ -12,6 +12,9 @@ class Solution:
         while minHeap:
             time, src = heapq.heappop(minHeap)
 
+            if src in hashset:
+                continue
+
             hashset[src] = time
 
             if len(hashset) == n:
