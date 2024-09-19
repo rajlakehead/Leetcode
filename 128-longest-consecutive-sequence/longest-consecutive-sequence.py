@@ -1,14 +1,19 @@
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
         hashmap = defaultdict(int)
+        nums = set(nums)
         ans = 0
-        nums.sort()
 
         for n in nums:
-            length = 1 + hashmap[n - 1] + hashmap[n + 1]
+            left = hashmap[n - 1]
+            right = hashmap[n + 1]
+            length = 1 + left + right
+
+
+            hashmap[n - left] = length
+            hashmap[n + right] = length
 
             ans = max(ans, length)
 
-            hashmap[n] = length
         
         return ans
