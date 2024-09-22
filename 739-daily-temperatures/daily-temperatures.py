@@ -3,14 +3,12 @@ class Solution:
         stack = []
         ans = [0] * len(temperatures)
 
-        for idx, tempt in enumerate(temperatures):
+        for i, t in enumerate(temperatures):
 
-            while stack and temperatures[stack[-1]] < tempt:
-                index = stack.pop()
-                ans[index] = (idx - index)
+            while stack and temperatures[stack[-1]] < t:
+                idx = stack.pop()
+                ans[idx] = (i - idx)
             
-            stack.append(idx)
-        return ans
-
-
+            stack.append(i)
         
+        return ans
