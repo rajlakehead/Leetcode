@@ -1,44 +1,25 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         left, right = 0, len(nums) - 1
-        minIndex = 0
-        targetIndex = 0
-
-        def condition(idx):
-            if nums[0] <= nums[idx]:
-                return False
-            return True
-        
-        def binarySearch(left, right, search):
-
-            while left < right:
-                mid = left + (right - left) // 2
-
-                if search:
-                    if nums[mid] >= target:
-                        right = mid
-                    else:
-                        left = mid + 1
-                else:
-                    if condition(mid):
-                        right = mid
-                    else:
-                        left = mid + 1
+    
+        while left < right:
+            mid = (left + right) // 2
             
-            return left
+            # Check if target is found
+            if nums[mid] == target:
+                return mid
+            
+            # Determine which side is sorted
+            if nums[left] <= nums[mid]:  # Left half is sorted
+                if nums[left] <= target < nums[mid]:
+                    right = mid  # Search in the left half
+                else:
+                    left = mid + 1  # Search in the right half
+            else:  # Right half is sorted
+                if nums[mid] < target <= nums[right]:
+                    left = mid + 1  # Search in the right half
+                else:
+                    right = mid  # Search in the left half
         
-        left = binarySearch(left, right, False)
-
-        if nums[0] < nums[left]:
-            minIndex = 0
-        else:
-            minIndex = left
-        
-        if target >= nums[minIndex] and target <= nums[len(nums) - 1]:
-            targetIndex = binarySearch(minIndex, len(nums) - 1, True)
-        else:
-            targetIndex = binarySearch(0, minIndex - 1, True)
-        
-        if nums[targetIndex] == target:
-            return targetIndex
-        return -1
+        # Final check outside the loop
+        return left if nums[left] == target else -1
