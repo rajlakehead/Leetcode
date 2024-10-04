@@ -1,13 +1,19 @@
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        feq = defaultdict(int)
-
-        for n in nums:
-            feq[n] += 1
+        count = Counter(nums)  # Get the frequency of each number
+        hashmap = defaultdict(list)
+        ans = []
         
-        sorted_feq = dict(sorted(feq.items(), key=lambda x:x[1], reverse=True))
-
-        return list(sorted_feq.keys())[:k]
-
-
+        # Bucket sort: Group numbers by their frequency
+        for num, freq in count.items():
+            hashmap[freq].append(num)
         
+        # Iterate from the largest frequency to the smallest
+        for i in range(len(nums), 0, -1):
+            if i in hashmap:  # Check if there are any numbers with this frequency
+                for num in hashmap[i]:
+                    ans.append(num)
+                    if len(ans) == k:
+                        return ans
+        
+        return ans
