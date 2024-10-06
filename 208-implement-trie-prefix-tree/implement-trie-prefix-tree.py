@@ -1,4 +1,4 @@
-class TreeNode:
+class TrieNode:
     def __init__(self):
         self.children = {}
         self.endWord = False
@@ -6,34 +6,35 @@ class TreeNode:
 class Trie:
 
     def __init__(self):
-        self.root = TreeNode()
+        self.root = TrieNode()
         
     def insert(self, word: str) -> None:
         curr = self.root
-        for c in word:
-            if c not in curr.children:
-                curr.children[c] = TreeNode()
-            curr = curr.children[c]
-        curr.endWord = True
-        
 
+        for w in word:
+            if w not in curr.children:
+                curr.children[w] = TrieNode()
+            curr = curr.children[w]
+        curr.endWord = True
+            
     def search(self, word: str) -> bool:
         curr = self.root
 
-        for c in word:
-            if c not in curr.children:
+        for w in word:
+            if w not in curr.children:
                 return False
-            curr = curr.children[c]
+            curr = curr.children[w]
+
         return curr.endWord
         
-
     def startsWith(self, prefix: str) -> bool:
         curr = self.root
 
-        for c in prefix:
-            if c not in curr.children:
+        for char in prefix:
+            if char not in curr.children:
                 return False
-            curr = curr.children[c]
+            curr = curr.children[char]
+        
         return True
         
 
