@@ -1,9 +1,10 @@
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
         hashmap = defaultdict(int)
+
+        hashmap[0] = 1
         currSum = 0
         res = 0
-        hashmap[0] = 1
 
         for n in nums:
             currSum += n
@@ -11,6 +12,4 @@ class Solution:
             hashmap[currSum] += 1
         
         return res
-
-
 
