@@ -1,17 +1,14 @@
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
         hashset = set()
-        newarr = []
-        i = 0
+        k = 0
 
-        for n in nums:
-            if n not in hashset:
-                nums[i] = n
-                hashset.add(n)
-                i += 1
-        
+        for i in range(len(nums)):
+            if nums[i] not in hashset:
+                hashset.add(nums[i])
+                nums[k] = nums[i]
+                k += 1
+        return k
 
 
-        return i 
-            
         
