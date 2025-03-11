@@ -1,30 +1,35 @@
 class Solution:
     def reorganizeString(self, s: str) -> str:
         count = Counter(s)
-        maxheap = []
-        for c in count:
-            maxheap.append((-count[c], c))
+        h = []
         res = ""
-        heapq.heapify(maxheap)
-        prev = None
-
-        while maxheap or prev:
-
-            if prev and not maxheap:
-                return ""
-
-            if maxheap:
-                cnt, char = heapq.heappop(maxheap)
-                res += char
-                cnt += 1
-
-            if prev:
-                heapq.heappush(maxheap, (prev[0], prev[1]))
-                prev = None
-
-            if cnt:
-                prev = [cnt, char]
-
-        return res
-
         
+        for c in set(s):
+            heapq.heappush(h, (-count[c], c))
+        
+        print(h)
+        
+        while len(h) >= 2:
+            feq1, char1 = heapq.heappop(h)
+            feq2, char2 = heapq.heappop(h)
+
+            res += char1
+            res += char2
+
+            feq1 += 1
+            feq2 += 1
+
+            if feq1 != 0:
+                heapq.heappush(h, (feq1, char1))
+            
+            if feq2 != 0:
+                heapq.heappush(h, (feq2, char2))
+        
+        if h and h[0][0] < -1:
+            return ""
+        elif h:
+            res += h[0][1]
+            return res
+        else:
+            return res
+
