@@ -4,17 +4,15 @@ class Solution:
         res = []
         
         for curr in lst:
-            if curr == "":
+            if curr == "" or curr == ".":
                 continue
-            
-            elif curr == ".":
-                continue
-            
+
             elif curr == "..":
                 if res:
                     res.pop()
             else:
                 res.append(curr)
+
         return "/" + "/".join(res)
             
             
