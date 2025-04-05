@@ -1,18 +1,25 @@
 class Solution:
     def firstMissingPositive(self, nums: List[int]) -> int:
         
-        for i in range(len(nums)):
-            if nums[i] <= 0:
-                nums[i] = len(nums) + 1
+        n = len(nums)
         
-        for i in range(len(nums)):
-            idx = abs(nums[i]) - 1
-            if idx >= 0 and idx < len(nums) and nums[idx] > 0:
-                nums[idx] = -1 * nums[idx]
+        # Step 1: Replace negatives, zeros, and numbers larger than n with a placeholder (n + 1)
+        for i in range(n):
+            if nums[i] <= 0 or nums[i] > n:
+                nums[i] = n + 1
         
-        for i in range(1, len(nums) + 1):
-            if nums[i - 1] >= 0:
-                return i
-        return len(nums) + 1
+        # Step 2: Mark the presence of numbers 1 to n
+        for num in nums:
+            val = abs(num)
+            if 1 <= val <= n:
+                if nums[val - 1] > 0:
+                    nums[val - 1] = -nums[val - 1]
+        
+        # Step 3: Find the first cell which isn't negative
+        for i in range(n):
+            if nums[i] > 0:
+                return i + 1
+        
+        return n + 1
 
 
