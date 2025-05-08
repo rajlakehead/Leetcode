@@ -1,21 +1,29 @@
-import heapq
-
 class Solution:
-    def minTimeToReach(self, moveTime):
-        m, n = len(moveTime), len(moveTime[0])
-        dist = [[float('inf')] * n for _ in range(m)]
-        dist[0][0] = 0
-        heap = [(0, 0, 0)]  # time, row, col
+    def minTimeToReach(self, moveTime: List[List[int]]) -> int:
+        n = len(moveTime)
+        m = len(moveTime[0])
 
-        while heap:
-            time, r, c = heapq.heappop(heap)
-            if (r, c) == (m-1, n-1):
-                return time
-            for dr, dc in [(-1,0), (1,0), (0,-1), (0,1)]:
-                nr, nc = r + dr, c + dc
-                if 0 <= nr < m and 0 <= nc < n:
-                    wait_time = max(time, moveTime[nr][nc]) + 1
-                    if wait_time < dist[nr][nc]:
-                        dist[nr][nc] = wait_time
-                        heapq.heappush(heap, (wait_time, nr, nc))
-        return -1
+        pq = [(0,0,0)]
+        heapify(pq)
+
+        visited = set()
+
+        while pq:
+            cur = heappop(pq)
+            if cur[1]==n-1 and cur[2]==m-1: # check if we are at destination and return immediately
+                return cur[0]
+
+            for adj in [
+                (cur[1]-1, cur[2]),
+                (cur[1]+1, cur[2]),
+                (cur[1], cur[2]+1),
+                (cur[1], cur[2]-1)
+            ]:
+                if not (0<=adj[0]<n and 0<=adj[1]<m):
+                    continue
+                if adj in visited:
+                    continue
+                visited.add(adj)
+                adjMoveTime = max(cur[0], moveTime[adj[0]][adj[1]])
+                adjMoveTime+=1
+                heappush(pq, (adjMoveTime, adj[0], adj[1]))
