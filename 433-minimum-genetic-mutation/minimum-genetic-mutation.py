@@ -2,6 +2,7 @@ class Solution:
     def minMutation(self, startGene: str, endGene: str, bank: List[str]) -> int:
         q = [(0, startGene)]
         visited = set()
+        bank = set(bank)
 
         while q:
                
@@ -10,8 +11,7 @@ class Solution:
 
                 if gene == endGene:
                     return steps
-            
-                visited.add(gene)
+
                 for i in range(8):
                     genelst = list(gene)
                     for char in "ACGT":
