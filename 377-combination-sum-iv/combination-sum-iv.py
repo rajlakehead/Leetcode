@@ -1,20 +1,12 @@
 class Solution:
-    def combinationSum4(self, nums: List[int], goal: int) -> int:
-        
-        memo = {}
+    def combinationSum4(self, nums: List[int], target: int) -> int:
+        dp = defaultdict(int)
+        dp[0] = 1
 
-        def dp(target):
-            if target == 0:
-                return 1
-            if target in memo:
-                return memo[target]
-
-            count = 0
+        for i in range(1, target + 1):
+            dp[i] = 0
 
             for n in nums:
-                if n <= target:
-                    count += dp(target - n)
-            memo[target] = count
-            return memo[target]
+                dp[i] += dp[i - n]
         
-        return dp(goal)
+        return dp[target]
