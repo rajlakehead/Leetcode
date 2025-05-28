@@ -38,7 +38,6 @@ class Solution:
         for i in range(len(edges2) + 1):
             tree2_max = max(tree2_max, bfs(i, k, tree2))
         
-        print(tree2_max)
         for i in range(len(edges1) + 1):
             ans.append(tree2_max + bfs(i, k + 1, tree1))
 
