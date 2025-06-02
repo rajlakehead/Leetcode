@@ -6,21 +6,21 @@ class Solution:
         
         memo = {} 
         
-        def helper(i: int, j: int, k: int) -> bool:
-            if k == l:
+        def helper(i: int, j: int) -> bool:
+            if i + j == l:
                 return True
             
             if (i, j) in memo:
                 return memo[(i, j)]
             
             ans = False
-            if i < m and s1[i] == s3[k]:
-                ans = ans or helper(i + 1, j, k + 1)
+            if i < m and s1[i] == s3[i + j]:
+                ans = ans or helper(i + 1, j)
                 
-            if j < n and s2[j] == s3[k]:
-                ans = ans or helper(i, j + 1, k + 1)
+            if j < n and s2[j] == s3[i + j]:
+                ans = ans or helper(i, j + 1)
             
             memo[(i, j)] = ans
             return ans
         
-        return helper(0, 0, 0)
+        return helper(0, 0)
