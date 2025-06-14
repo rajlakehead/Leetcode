@@ -20,7 +20,7 @@ class TimeMap:
             else:
                 right = mid
         
-        return lst[mid][1]
+        return lst[left - 1][1]
 
 
 
