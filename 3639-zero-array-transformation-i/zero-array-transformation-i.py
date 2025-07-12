@@ -1,17 +1,19 @@
 class Solution:
     def isZeroArray(self, nums: List[int], queries: List[List[int]]) -> bool:
-        deltaArray = [0] * (len(nums) + 1)
-        for left, right in queries:
-            deltaArray[left] += 1
-            deltaArray[right + 1] -= 1
+        prefix = [0] * (len(nums) + 1)
 
-        operationCounts = []
-        currentOperations = 0
-        for delta in deltaArray:
-            currentOperations += delta
-            operationCounts.append(currentOperations)
-            
-        for operations, target in zip(operationCounts, nums):
-            if operations < target:
+        for a, b in queries:
+            prefix[a] += 1
+            prefix[b + 1] -= 1
+        
+        for i in range(1, len(prefix)):
+            prefix[i] = prefix[i] + prefix[i - 1]
+
+        
+        for i in range(len(nums)):
+            if nums[i] > prefix[i]:
                 return False
         return True
+                
+
+            
