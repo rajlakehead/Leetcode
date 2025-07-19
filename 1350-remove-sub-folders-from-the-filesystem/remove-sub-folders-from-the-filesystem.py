@@ -1,21 +1,15 @@
 class Solution:
     def removeSubfolders(self, folder: List[str]) -> List[str]:
-        hashset = set()
         folder.sort()
-        res = []
+        res = [folder[0]]
 
-        for f in folder:
-            lst = f[1:].split("/")
-            new = "/"
-            for i in range(len(lst)):
-                new += lst[i]
-                if new in hashset:
-                    break
-                new += "/"
-            else:
-                hashset.add("/" + "/".join(lst))
-                res.append(f)
-                    
+        for i in range(1, len(folder)):
+            parent = res[-1]
+            parent += "/"
+
+            if not folder[i].startswith(parent):
+                res.append(folder[i])
         return res
+
 
         
