@@ -1,29 +1,28 @@
 class Solution:
     def minTimeToReach(self, moveTime: List[List[int]]) -> int:
+        minheap = [(0, 0, 0)]
+        visited = set()
         n = len(moveTime)
         m = len(moveTime[0])
+        directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
 
-        pq = [(0,0,0)]
-        heapify(pq)
+        while minheap:
+            t, r, c = heapq.heappop(minheap)
 
-        visited = set()
+            if r == n - 1 and c == m - 1:
+                return t
+            
+            if (r, c) in visited:
+                continue
+            
+            visited.add((r, c))
 
-        while pq:
-            cur = heappop(pq)
-            if cur[1]==n-1 and cur[2]==m-1: # check if we are at destination and return immediately
-                return cur[0]
+            for dr, dc in directions:
+                row = r + dr
+                col = c + dc
 
-            for adj in [
-                (cur[1]-1, cur[2]),
-                (cur[1]+1, cur[2]),
-                (cur[1], cur[2]+1),
-                (cur[1], cur[2]-1)
-            ]:
-                if not (0<=adj[0]<n and 0<=adj[1]<m):
-                    continue
-                if adj in visited:
-                    continue
-                visited.add(adj)
-                adjMoveTime = max(cur[0], moveTime[adj[0]][adj[1]])
-                adjMoveTime+=1
-                heappush(pq, (adjMoveTime, adj[0], adj[1]))
+                if (row, col) not in visited and row < n and col < m and row >= 0 and col >= 0:
+                    
+                    heapq.heappush(minheap, (1 + max(moveTime[row][col], t), row, col))
+        
+
