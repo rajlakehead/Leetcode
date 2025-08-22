@@ -1,12 +1,12 @@
 class Solution:
     def hasAllCodes(self, s: str, k: int) -> bool:
-        hashset = set()
+        substrings = set()
+        left = 0
 
-        for i in range(len(s) - k + 1):
-            if s[i: i + k] not in hashset:
-                hashset.add(s[i: i + k])
-            
-            if len(hashset) == 2 ** k:
-                return True
-        return False
+        for right in range(len(s)):
+
+            if right - left + 1 == k:
+                substrings.add(s[left: right + 1])
+                left += 1
         
+        return len(substrings) == 2 ** k
