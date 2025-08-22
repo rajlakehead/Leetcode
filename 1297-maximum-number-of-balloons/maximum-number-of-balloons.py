@@ -1,13 +1,22 @@
 class Solution:
     def maxNumberOfBalloons(self, text: str) -> int:
         count = Counter(text)
-        reqCount = Counter('balloon')
-        res = float('inf')
+        res = 0
 
-        for char in reqCount:
-            if count[char] == 0:
-                return 0
-            else:
-                res = min(res, count[char] // reqCount[char])
+        while True:
 
-        return res
+            for ch in "balloon":
+                if ch in count:
+                    count[ch] -= 1
+                    if count[ch] == 0:
+                        del count[ch]
+                else:
+                    return res
+            res += 1
+
+
+
+
+
+
+        
