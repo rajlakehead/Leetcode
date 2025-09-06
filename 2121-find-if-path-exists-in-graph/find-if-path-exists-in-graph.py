@@ -8,20 +8,17 @@ class Solution:
         
         visited = set()
 
-        
-        def dfs(node):
-            if node in visited:
+        def dfs(s):
+            if s in visited:
                 return False
-
-            if node == destination:
+            
+            if s == destination:
                 return True
             
-            visited.add(node)
-            for neighbour in adj[node]:
-                if dfs(neighbour):
+            visited.add(s)
+
+            for nei in adj[s]:
+                if dfs(nei):
                     return True
             return False
-
         return dfs(source)
-
-        
