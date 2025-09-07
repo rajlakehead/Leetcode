@@ -6,11 +6,10 @@ class Solution:
             adj[a].append(b)
         
         visit = [0] * numCourses
-        courses = 0
         has_cycle = False
 
         def dfs(course):
-            nonlocal has_cycle, courses
+            nonlocal has_cycle
             if visit[course] == 1:
                 has_cycle = True
                 return
@@ -24,13 +23,11 @@ class Solution:
             for pre in adj[course]:
                 dfs(pre)
             visit[course] = 2
-            courses += 1
         for i in range(numCourses):
             if has_cycle:
                 return False
-            if visit[i] == 0:
-                dfs(i)
-        return courses == numCourses
+            dfs(i)
+        return True
 
 
 
