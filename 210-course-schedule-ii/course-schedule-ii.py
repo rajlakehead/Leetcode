@@ -5,28 +5,29 @@ class Solution:
         for src, dst in prerequisites:
             adj[src].append(dst)
         
-        visit = [0] * (numCourses)
+        visit = [0] * numCourses
+        stack = []
         has_cycle = False
-        res = []
 
-        def dfs(src):
+        def dfs(course):
             nonlocal has_cycle
-            if visit[src] == 1:
+            if has_cycle:
+                return
+            if visit[course] == 1:
                 has_cycle = True
                 return
-            
-            if visit[src] == 2:
+            if visit[course] == 2:
                 return
+            
+            visit[course] = 1
 
-            visit[src] = 1
-
-            for neighbour in adj[src]:
-                dfs(neighbour)
-            res.append(src)
-            visit[src] = 2
-             
+            for pre in adj[course]:
+                dfs(pre)
+            stack.append(course)
+            visit[course] = 2
         for i in range(numCourses):
-            dfs(i)
             if has_cycle:
                 return []
-        return res
+            dfs(i)
+        return stack
+        
