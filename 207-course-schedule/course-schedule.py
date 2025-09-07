@@ -2,31 +2,37 @@ class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         adj = defaultdict(list)
 
-        for src, dst in prerequisites:
-            adj[src].append(dst)
+        for a, b in prerequisites:
+            adj[a].append(b)
         
-        visit = [0] * (numCourses)
+        visit = [0] * numCourses
+        courses = 0
         has_cycle = False
-        print(adj)
 
-        def dfs(src):
-            nonlocal has_cycle
-            if visit[src] == 1:
+        def dfs(course):
+            nonlocal has_cycle, courses
+            if visit[course] == 1:
                 has_cycle = True
                 return
-            
-            if visit[src] == 2:
+            if has_cycle:
                 return
-
-            visit[src] = 1
-
-            for neighbour in adj[src]:
-                dfs(neighbour)
+            if visit[course] == 2:
+                return
             
-            visit[src] = 2
-             
+            visit[course] = 1
+
+            for pre in adj[course]:
+                dfs(pre)
+            visit[course] = 2
+            courses += 1
         for i in range(numCourses):
-            dfs(i)
             if has_cycle:
                 return False
-        return True
+            if visit[i] == 0:
+                dfs(i)
+        return courses == numCourses
+
+
+
+
+            
